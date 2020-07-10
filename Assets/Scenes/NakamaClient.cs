@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using System;
 using SkillzSDK;
@@ -18,8 +18,12 @@ public class NakamaClient : MonoBehaviour
     async void Start()
     {
         deviceId = SystemInfo.deviceUniqueIdentifier;
+        Dictionary<string, string> authParams = new Dictionary<string, string>();
+        authParams.Add("skillz_match_token", "1234567890");
 
-        var session = await client.AuthenticateDeviceAsync(deviceId, "test-client-2", false);
+        var session = await client.AuthenticateCustomAsync(deviceId, "test-client-2", false, authParams);
+        //var session = await client.AuthenticateDeviceAsync(deviceId, "test-client-2", false);
+
         Debug.Log("Device authenticated with token:");
         Debug.Log(session.AuthToken); // raw JWT token
         Debug.LogFormat("Session user id: '{0}'", session.UserId);
